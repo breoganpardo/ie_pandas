@@ -50,3 +50,21 @@ class DataFrame:
 
     def __repr__(self):
         return self.formatted_frame()
+    
+    def get_row(self, row):
+        if isinstance(row, str):
+            row = self.index.index(row)
+        return self.data[row].tolist()
+    
+    def __setitem__(self, index, value):
+        self.data[index] = value
+    
+    def min(self):
+        mins = []
+        for i in self.cols:
+            try:
+                mins.append(self.__getitem__(i).astype(np.number).min())
+            except: 
+                pass
+
+        return mins
