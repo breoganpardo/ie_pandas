@@ -1,13 +1,17 @@
+import logging
 import numpy as np
 
 
 class DataFrame:
     def __init__(self, data, cols=None, index=None):
 
-        if isinstance(data, list):
-            data = np.array(data)
-
-        if isinstance(data, dict):
+        if isinstance(data, np.ndarray) and data.dtype.type is np.str_:
+            logging.warning(
+                'All values in the dataframe are strings, if you wish to avoid this add dtype="object" inside the numpy array'
+            )
+        elif isinstance(data, list):
+            data = np.array(data, dtype=object)
+        elif isinstance(data, dict):
             cols = list(data.keys())
             matrix = []
 
@@ -15,7 +19,7 @@ class DataFrame:
                 row = [data[col][ind] for col in cols]
                 matrix.append(row)
 
-            data = np.array(matrix)
+            data = np.array(matrix, dtype=object)
 
         if cols is None:
             cols = [str(col) for col in list(range(len(data[0])))]
@@ -62,9 +66,10 @@ class DataFrame:
     def min(self):
         mins = []
         for i in self.cols:
-            try:
-                mins.append(self.__getitem__(i).astype(np.number).min())
-            except:
-                pass
+            items = self.__getitem__(i)
+            if isinstance(items[0], (np.number, int, float)) and not isinstance(
+                items[0], bool
+            ):
+                mins.append(items.min())
 
         return mins
