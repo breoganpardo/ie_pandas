@@ -71,5 +71,16 @@ class DataFrame:
                 items[0], bool
             ):
                 mins.append(items.min())
-
+                
         return mins
+    
+    def max(self):
+        list_max = []
+        for i in self.cols:
+            items = self.__getitem__(i)
+            if isinstance(items[0], (np.number, int, float)) and not isinstance(
+                items[0], bool
+            ):
+                list_max.append(items.max())                
+                
+        return list_max
