@@ -84,3 +84,94 @@ class DataFrame:
                 list_max.append(items.max())                
                 
         return list_max
+
+    def mean(self):
+
+        lst = []
+        for i in range(len(df[1])):
+            for j in df[:, i]:
+                try:
+                    float(j)
+                    lst.append(i)
+                except:
+                    pass
+
+        lst_indices = []
+        for i in lst:
+            if lst.count(i) == len(df[:, 1]):
+                lst_indices.append(i)
+        lst_indices = list(set(lst_indices))
+
+        self_float = self[:, lst_indices].astype("float64")
+
+        mean_lst = []
+        for i in range(len(self_float[1])):
+            mean_lst.append(self_float[:, i].mean())
+
+        mean_lst = [int(i) if i == int(i) else float(i) for i in mean_lst]
+
+        return mean_lst
+
+    def median(self):
+
+        lst = []
+        for i in range(len(df[1])):
+            for j in df[:, i]:
+                try:
+                    float(j)
+                    lst.append(i)
+                except:
+                    pass
+
+        lst_indices = []
+        for i in lst:
+            if lst.count(i) == len(df[:, 1]):
+                lst_indices.append(i)
+        lst_indices = list(set(lst_indices))
+
+        self_float = self[:, lst_indices].astype("float64")
+
+        def median_from_list(lst):
+            sortedLst = sorted(lst)
+            lstLen = len(lst)
+            index = (lstLen - 1) // 2
+
+            if lstLen % 2:
+                return sortedLst[index]
+            else:
+                return (sortedLst[index] + sortedLst[index + 1]) / 2.0
+
+        median_lst = []
+        for i in range(len(self_float[1])):
+            median_lst.append(median_from_list(self_float[:, i]))
+
+        median_lst = [int(i) if i == int(i) else float(i) for i in median_lst]
+
+        return median_lst
+
+    def sum(self):
+
+        lst = []
+        for i in range(len(df[1])):
+            for j in df[:, i]:
+                try:
+                    float(j)
+                    lst.append(i)
+                except:
+                    pass
+
+        lst_indices = []
+        for i in lst:
+            if lst.count(i) == len(df[:, 1]):
+                lst_indices.append(i)
+        lst_indices = list(set(lst_indices))
+
+        self_float = self[:, lst_indices].astype("float64")
+
+        summed = []
+        for i in range(len(self_float[1])):
+            summed.append(self_float[:, i].sum())
+
+        summed = [int(i) if i == int(i) else float(i) for i in summed]
+
+        return summed
