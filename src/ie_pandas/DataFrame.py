@@ -63,33 +63,10 @@ class DataFrame:
     def __setitem__(self, index, value):
         self.data[index] = value
 
-    def min(self):
-        mins = []
-        for i in self.cols:
-            items = self.__getitem__(i)
-            if isinstance(items[0], (np.number, int, float)) and not isinstance(
-                items[0], bool
-            ):
-                mins.append(items.min())
-                
-        return mins
-    
-    def max(self):
-        list_max = []
-        for i in self.cols:
-            items = self.__getitem__(i)
-            if isinstance(items[0], (np.number, int, float)) and not isinstance(
-                items[0], bool
-            ):
-                list_max.append(items.max())                
-                
-        return list_max
-
-    def mean(self):
-
+    def num_cols(self):
         lst = []
-        for i in range(len(df[1])):
-            for j in df[:, i]:
+        for i in range(len(self[1])):
+            for j in self[:, i]:
                 try:
                     float(j)
                     lst.append(i)
@@ -98,11 +75,41 @@ class DataFrame:
 
         lst_indices = []
         for i in lst:
-            if lst.count(i) == len(df[:, 1]):
+            if lst.count(i) == len(self[:, 1]):
                 lst_indices.append(i)
         lst_indices = list(set(lst_indices))
 
         self_float = self[:, lst_indices].astype("float64")
+        
+        return self_float
+    
+    def min(self):
+
+        self_float = self.num_cols()
+        
+        mins = []
+        for i in range(len(self_float[1])):
+            mins.append(self_float[:, i].min())
+            
+        mins = [int(i) if i == int(i) else float(i) for i in mins]
+
+        return mins
+    
+    def max(self):
+
+        self_float = self.num_cols()
+        
+        maxs = []
+        for i in range(len(self_float[1])):
+            maxs.append(self_float[:, i].max())
+            
+        maxs = [int(i) if i == int(i) else float(i) for i in maxs]
+
+        return maxs
+
+    def mean(self):
+
+        self_float = self.num_cols()
 
         mean_lst = []
         for i in range(len(self_float[1])):
@@ -112,34 +119,19 @@ class DataFrame:
 
         return mean_lst
 
+    def median_from_list(lst):
+        sortedLst = sorted(lst)
+        lstLen = len(lst)
+        index = (lstLen - 1) // 2
+
+        if lstLen % 2:
+            return sortedLst[index]
+        else:
+            return (sortedLst[index] + sortedLst[index + 1]) / 2.0
+    
     def median(self):
 
-        lst = []
-        for i in range(len(df[1])):
-            for j in df[:, i]:
-                try:
-                    float(j)
-                    lst.append(i)
-                except:
-                    pass
-
-        lst_indices = []
-        for i in lst:
-            if lst.count(i) == len(df[:, 1]):
-                lst_indices.append(i)
-        lst_indices = list(set(lst_indices))
-
-        self_float = self[:, lst_indices].astype("float64")
-
-        def median_from_list(lst):
-            sortedLst = sorted(lst)
-            lstLen = len(lst)
-            index = (lstLen - 1) // 2
-
-            if lstLen % 2:
-                return sortedLst[index]
-            else:
-                return (sortedLst[index] + sortedLst[index + 1]) / 2.0
+        self_float = self.num_cols()
 
         median_lst = []
         for i in range(len(self_float[1])):
@@ -151,22 +143,7 @@ class DataFrame:
 
     def sum(self):
 
-        lst = []
-        for i in range(len(df[1])):
-            for j in df[:, i]:
-                try:
-                    float(j)
-                    lst.append(i)
-                except:
-                    pass
-
-        lst_indices = []
-        for i in lst:
-            if lst.count(i) == len(df[:, 1]):
-                lst_indices.append(i)
-        lst_indices = list(set(lst_indices))
-
-        self_float = self[:, lst_indices].astype("float64")
+        self_float = self.num_cols()
 
         summed = []
         for i in range(len(self_float[1])):
