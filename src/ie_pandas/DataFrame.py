@@ -119,7 +119,7 @@ class DataFrame:
 
         return mean_lst
 
-    def median_from_list(lst):
+    def median_from_list(self, lst):
         sortedLst = sorted(lst)
         lstLen = len(lst)
         index = (lstLen - 1) // 2
@@ -135,7 +135,7 @@ class DataFrame:
 
         median_lst = []
         for i in range(len(self_float[1])):
-            median_lst.append(median_from_list(self_float[:, i]))
+            median_lst.append(self.median_from_list(self_float[:, i]))
 
         median_lst = [int(i) if i == int(i) else float(i) for i in median_lst]
 
