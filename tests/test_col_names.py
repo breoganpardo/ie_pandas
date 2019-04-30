@@ -1,10 +1,9 @@
-# Test for dataframe taking the correct column names
-
 from ie_pandas import DataFrame
 import numpy as np
 import pytest
 
 
+# Test for dataframe taking the correct column names
 @pytest.mark.parametrize(
     "dictionary,expected_names",
     [

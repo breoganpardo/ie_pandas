@@ -1,9 +1,8 @@
-# Test for dataframe taking the correct row indexes
-
 from ie_pandas import DataFrame
 import numpy as np
 import pytest
 
+# Test for dataframe taking the correct row indexes
 
 @pytest.mark.parametrize(
     "data,given_index,expected_index",
