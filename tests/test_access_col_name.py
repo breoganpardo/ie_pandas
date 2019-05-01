@@ -18,7 +18,7 @@ def test_access_col_name_dict():
     assert (output1 == expected_out1).all()
 
 
-def test_access_col_name_list():
+def test_access_without_col_name():
     df2 = ie.DataFrame([[1, 2, 3], [7, 3, 6], [7, 7, 9]])
 
     output2 = df2["0"]

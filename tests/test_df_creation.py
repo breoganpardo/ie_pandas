@@ -51,3 +51,18 @@ def test_create_DF_from_nparray(data, expected_df):
     df = DataFrame(data)
 
     assert (df.data == expected_df).all()
+
+
+@pytest.mark.parametrize(
+    "data,expected_df",
+    [
+        (
+            [[1, 3, 5], [7, 6, 2], [2, -4, 7], [5, 3, 9]],
+            np.array([[1, 3, 5], [7, 6, 2], [2, -4, 7], [5, 3, 9]]),
+        )
+    ],
+)
+def test_create_DF_from_list_of_lists(data, expected_df):
+    df = DataFrame(data)
+
+    assert (df.data == expected_df).all()

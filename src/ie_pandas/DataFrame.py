@@ -80,29 +80,29 @@ class DataFrame:
         lst_indices = list(set(lst_indices))
 
         self_float = self[:, lst_indices].astype("float64")
-        
+
         return self_float
-    
+
     def min(self):
 
         self_float = self.num_cols()
-        
+
         mins = []
         for i in range(len(self_float[1])):
             mins.append(self_float[:, i].min())
-            
+
         mins = [int(i) if i == int(i) else float(i) for i in mins]
 
         return mins
-    
+
     def max(self):
 
         self_float = self.num_cols()
-        
+
         maxs = []
         for i in range(len(self_float[1])):
             maxs.append(self_float[:, i].max())
-            
+
         maxs = [int(i) if i == int(i) else float(i) for i in maxs]
 
         return maxs
@@ -128,7 +128,7 @@ class DataFrame:
             return sortedLst[index]
         else:
             return (sortedLst[index] + sortedLst[index + 1]) / 2.0
-    
+
     def median(self):
 
         self_float = self.num_cols()
