@@ -33,7 +33,9 @@ def test_correct_column_names_from_dictionary(dictionary, expected_names):
         ([[2, 5, 9], [5, 13, 23], [5, 2, 9]], ["c0", "c1", "c2"], ["c0", "c1", "c2"]),
     ],
 )
-def test_correct_column_names_from_list(data, given_names, expected_names):
+def test_correct_column_names_when_passed_by_parameter(
+    data, given_names, expected_names
+):
     df = DataFrame(data, cols=given_names)
 
     column_names = df.cols
