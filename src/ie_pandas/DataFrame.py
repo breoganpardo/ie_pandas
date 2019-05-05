@@ -1,5 +1,6 @@
 import logging
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class DataFrame:
@@ -162,3 +163,17 @@ class DataFrame:
         summed = [int(i) if i == int(i) else float(i) for i in summed]
 
         return summed
+
+    def visualize(self, col1, col2):
+        """To return a plot, graphically showing relationship between 2 numerical columns."""
+        lst = list(np.concatenate((col1, col2)))
+        for i in lst:
+            try:
+                float(i)
+            except:
+                return print('Please enter numerical columns only.')
+                
+                
+        plt.plot(col1, col2)
+        plt.plot(col1, col2, 'o')
+        plt.show()
