@@ -4,7 +4,7 @@ import numpy as np
 
 class DataFrame:
     def __init__(self, data, cols=None, index=None):
-
+        """Dataframe class takes an input of types: list of lists, numpy arrays, a dictionary of lists, and a dictionary of numpy arrays and returns a dataframe with the specified input. The class method also works with an optional argument of column names and row names as list."""
         if isinstance(data, np.ndarray) and data.dtype.type is np.str_:
             logging.warning(
                 'All values in the dataframe are strings, if you wish to avoid this add dtype="object" inside the numpy array'
@@ -32,6 +32,7 @@ class DataFrame:
         self.data = data
 
     def __getitem__(self, items):
+        """Used to map the specified index to the corresponding values within the dataframe"""
         if isinstance(items, list):
             cols = [self.cols.index(item) for item in items]
             return self.data[:, cols]
@@ -50,20 +51,25 @@ class DataFrame:
         return string
 
     def __str__(self):
+        """Used as a representation for the class object"""
         return self.formatted_frame()
 
     def __repr__(self):
+        """Used as a representation of the class object"""
         return self.formatted_frame()
 
     def get_row(self, row):
+        """Returns selected row from a dataframe by specifying row index"""
         if isinstance(row, str):
             row = self.index.index(row)
         return self.data[row].tolist()
 
     def __setitem__(self, index, value):
+        """Used to alter/update the values in the specified index to new values"""
         self.data[index] = value
 
     def num_cols(self):
+        """Returns the numeric columns in a dataframe as an array of lists"""
         lst = []
         for i in range(len(self[1])):
             for j in self[:, i]:
@@ -84,7 +90,7 @@ class DataFrame:
         return self_float
 
     def min(self):
-
+        """Returns a list of the minimum values for each of the numeric columns in a dataframe"""
         self_float = self.num_cols()
 
         mins = []
@@ -96,7 +102,7 @@ class DataFrame:
         return mins
 
     def max(self):
-
+        """Returns a list of the maximum values for each of the numeric columns in a dataframe"""
         self_float = self.num_cols()
 
         maxs = []
@@ -108,6 +114,7 @@ class DataFrame:
         return maxs
 
     def mean(self):
+        """Returns a list of column means for all numeric columns in a dataframe"""
 
         self_float = self.num_cols()
 
@@ -120,6 +127,7 @@ class DataFrame:
         return mean_lst
 
     def median_from_list(self, lst):
+        """Returns the median of a sorted list/column taking into consideration whether the column has an even or odd number of values"""
         sortedLst = sorted(lst)
         lstLen = len(lst)
         index = (lstLen - 1) // 2
@@ -130,6 +138,7 @@ class DataFrame:
             return (sortedLst[index] + sortedLst[index + 1]) / 2.0
 
     def median(self):
+        """Returns a list of column medians for all numeric columns in a dataframe. The function appends median items computed from the median_from_list function and forms a list of medians"""
 
         self_float = self.num_cols()
 
@@ -142,6 +151,7 @@ class DataFrame:
         return median_lst
 
     def sum(self):
+        """Returns a list of column summation for all numeric columns in a dataframe"""
 
         self_float = self.num_cols()
 
