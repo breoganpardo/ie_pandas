@@ -71,11 +71,18 @@ Since the underlying object of the dataframe is a numpy array, you may perform a
 ```python
 df[:, 1:2].sum()
 ```
+* Visualize relationships between 2 entirely numerical columns (only for numerical columns)
+```python
+df.visualize(df[:, 2], df[:, 3])
+# or
+df.visualize(df["c1"], df["c2"])
+```
 
 #### Dependencies
 
 IE_Pandas only requires the following packages:
 * Numpy (>=1.16)
+* Matplotlib (>=3.0.2)
 
 However, for development purposes, the following packages are needed:
 * Pytest (>= 4.2)
